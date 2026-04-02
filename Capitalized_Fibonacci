@@ -1,0 +1,20 @@
+#Given a string, return a new string where each letter is capitalized if its index is a Fibonacci number, and lowercased otherwise.
+#The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones.
+#The first character is at index 0.
+#If the index of non-letter characters is a Fibonacci number, leave it unchanged.
+
+def capitalize_fibonacci(s):
+    arr=[0,1]
+    s1=""
+    for x in enumerate(s):
+        if x[0] > 0:
+            arr.append(arr[x[0]]+arr[x[0]-1])
+        if x[0] in arr:
+          x=[x[0], x[1].capitalize()]
+          
+        else:
+          x=[x[0], x[1].lower()]
+        s1=s1+x[1]
+
+
+    return s1
