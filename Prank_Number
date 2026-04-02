@@ -1,0 +1,58 @@
+#Given an array of numbers where all but one number follow a pattern, return a new array with the one number that doesn't follow the pattern fixed.
+
+#The pattern will be one of:
+#The numbers increase from one to the next by a fixed amount (addition).
+#The numbers decrease from one to the next by a fixed amount (subtraction).
+
+def fix_prank_number(arr):
+    diff = check_difference(arr)
+
+
+    if diff > 0:
+        for x in range(len(arr)-1):
+          diff1 = arr[x] - arr[x+1]
+          if diff != diff1 and x<len(arr)-2:
+            diff2= arr[x+1]-arr[x+2]
+            if diff2 == diff:
+              arr[x] = arr[x+1] + diff
+              break
+            else:
+              arr[x+1] = arr[x+2] + diff
+          if diff != diff1:
+            arr[x+1] = arr[x] - diff 
+
+    if diff < 0:
+        for x in range(len(arr)-1):
+          diff1 = arr[x] - arr[x+1]
+
+          if diff != diff1 and x<len(arr)-2:
+            diff2= arr[x+1]-arr[x+2]
+            if diff2 == diff and x!=0:
+              arr[x] = arr[x-1] - diff
+              break
+            elif x==0:
+              arr[x] = arr[x+1] + diff
+              break
+            else:
+              arr[x+1] = arr[x] - diff
+              break
+    
+          if diff != diff1:
+            arr[x+1] = arr[x] - diff 
+
+          
+
+    return arr
+
+
+#The purpose of the following function is to check the difference between the numbers in the array. A for loop is used to go through the array and substract the next number, and add that difference into a new array.
+#This new array (diff_arr) has all the difference between all the numbers with the purpose of determining the expected difference in the pattern. This array is then sorted, the prank value will either be the first or last.
+#Since the prank value would be in the first or last position we can check the second position to determine the pattern the array should be following. This difference is returned.
+def check_difference(arr):
+      dif_arr= []
+      for x in range(len(arr)-1):
+        dif_arr.append(arr[x]-arr[x+1])
+
+      dif_arr.sort()
+
+      return dif_arr[1] 
